@@ -4,7 +4,7 @@
   "exports": {
     "./Experiment": "./src/Experiment.tsx",
     "./Variant": "./src/Variant.tsx",
-    "./useAbfy": "./src/useAbfy.tsx"
+    "./AbfyContext": "./src/AbfyContext.tsx"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

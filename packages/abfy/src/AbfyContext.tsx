@@ -1,4 +1,23 @@
-import { useState } from "react";
+"use client";
+import React, { createContext, useContext, useState } from "react";
+
+const ABfyContext = createContext({ backendUrl: "" });
+
+export const AbfyProvider = ({ children, backendUrl }: any) => {
+  return (
+    <ABfyContext.Provider value={{ backendUrl: backendUrl }}>
+      {children}
+    </ABfyContext.Provider>
+  );
+};
+
+export const useAbfyContext = () => {
+  const context = useContext(ABfyContext);
+  if (!context) {
+    throw new Error("useAbfyContext must be used within an AbfyProvider");
+  }
+  return context;
+};
 
 type ExperimentResult = {
   experimentId: string;
@@ -10,23 +29,7 @@ type UseAbfyReturn = [
   (experimentId: string, variantId: string) => void,
 ];
 
-function AbfyProvider(backendUrl: string): UseAbfyReturn {
-  const [experimentData, setExperimentData] = useState<Array<ExperimentResult>>(
-    []
-  );
-
-  const addExperimentResult = (experimentId: string, variantId: string) => {
-    console.log("New Experiment Result added", experimentId, variantId);
-    setExperimentData((prevData) => [...prevData, { experimentId, variantId }]);
-    publishExperimentResult(experimentId, variantId, backendUrl);
-  };
-
-  return [experimentData, addExperimentResult];
-}
-
-export default AbfyProvider;
-
-async function publishExperimentResult(
+export async function publishExperimentResult(
   experimentId: string,
   variantId: string,
   backendUrl: string
@@ -36,7 +39,7 @@ async function publishExperimentResult(
     variantId,
     timestamp: new Date().toUTCString(),
   };
-
+  console.log("Backend url is", backendUrl);
   try {
     const response = await fetch(backendUrl, {
       method: "POST",

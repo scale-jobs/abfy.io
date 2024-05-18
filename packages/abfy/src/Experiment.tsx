@@ -1,7 +1,7 @@
 "use client";
 import React, { ReactElement, useEffect, useState } from "react";
 import { ReactNode } from "react";
-import AbfyProvider from "./useAbfy";
+import { publishExperimentResult, useAbfyContext } from "./AbfyContext";
 
 type ExperimentPropTypes = {
   children: ReactNode;
@@ -11,9 +11,10 @@ type ExperimentPropTypes = {
 export function Experiment({ id, children }: ExperimentPropTypes): JSX.Element {
   const [selectedVariant, setSelectedVariant] =
     useState<null | ReactElement<any>>(null);
-  const [experimentData, addExperimentResult] = AbfyProvider(
-    "https://webhook.site/89a562a1-b9ad-4b35-a909-c0811c3bf077"
-  );
+  const context = useAbfyContext();
+  useEffect(() => {
+    console.log("Context is", context);
+  }, [context]);
 
   useEffect(() => {
     const variants = React.Children.toArray(children).filter(
@@ -27,7 +28,11 @@ export function Experiment({ id, children }: ExperimentPropTypes): JSX.Element {
         if (randomVariant.props.children) {
           console.log("Variant Selected Is", randomVariant.props.children);
           setSelectedVariant(randomVariant);
-          addExperimentResult(id, randomVariant.props.id);
+          publishExperimentResult(
+            id,
+            randomVariant.props.id,
+            context.backendUrl
+          );
         }
       }
     }
