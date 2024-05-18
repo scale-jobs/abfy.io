@@ -3,8 +3,9 @@
 
 type VariantPropTypes = {
   id: string;
+  children: React.ReactNode[];
 };
 
-export function Variant({ id }: VariantPropTypes) {
-  return <div>{id}</div>;
+export function Variant({ id, children }: any) {
+  return <div id="abfy_variant">{children}</div>;
 }
