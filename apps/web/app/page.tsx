@@ -86,8 +86,8 @@ export default function Page(): JSX.Element {
 
       <h1>This is a Test</h1>
       <Experiment>
-        <Variant id="1"></Variant>
-        <Variant id="1"></Variant>
+        <Variant></Variant>
+        <Variant></Variant>
       </Experiment>
     </main>
   );
