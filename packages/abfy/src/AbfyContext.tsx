@@ -37,16 +37,28 @@ type ExperimentResult = {
   variantId: string;
 };
 
+type ExperiementResultPayload = {
+  experimentId: string;
+  variantId: string;
+  timestamp: string;
+  context?: string;
+};
+
 export async function publishExperimentResult(
   experimentId: string,
   variantId: string,
-  backendUrl: string
+  backendUrl: string,
+  context: null | string = null
 ): Promise<void> {
-  const payload = {
+  const payload: ExperiementResultPayload = {
     experimentId,
     variantId,
     timestamp: new Date().toUTCString(),
   };
+
+  if (context) {
+    payload.context = context;
+  }
 
   try {
     const response = await fetch(backendUrl, {

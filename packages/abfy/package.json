@@ -4,7 +4,8 @@
   "exports": {
     "./Experiment": "./src/Experiment.tsx",
     "./Variant": "./src/Variant.tsx",
-    "./AbfyContext": "./src/AbfyContext.tsx"
+    "./AbfyContext": "./src/AbfyContext.tsx",
+    "./KeyAction": "./src/KeyAction.tsx"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
