@@ -24,11 +24,6 @@ type ExperimentResult = {
   variantId: string;
 };
 
-type UseAbfyReturn = [
-  Array<ExperimentResult>,
-  (experimentId: string, variantId: string) => void,
-];
-
 export async function publishExperimentResult(
   experimentId: string,
   variantId: string,
@@ -39,7 +34,7 @@ export async function publishExperimentResult(
     variantId,
     timestamp: new Date().toUTCString(),
   };
-  console.log("Backend url is", backendUrl);
+
   try {
     const response = await fetch(backendUrl, {
       method: "POST",
