@@ -2,6 +2,7 @@ import React from "react";
 import { Experiment } from "@repo/abfy/Experiment";
 import { Variant } from "@repo/abfy/Variant";
 import { KeyAction } from "@repo/abfy/KeyAction";
+import RandomComponent from "./RandomComponent";
 
 function test() {
   return (
@@ -26,10 +27,7 @@ function test() {
       </Experiment>
 
       <div>
-        <h2>Some other component that is not the variants</h2>
-        <KeyAction>
-          <button>Click me for Key Action Recording</button>
-        </KeyAction>
+        <RandomComponent />
       </div>
     </>
   );

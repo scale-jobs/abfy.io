@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useContext, useEffect } from "react";
-import generateRenderId, { getRenderId, storeRenderId } from "./utils";
+import { getRenderId, randomIdGenerator, storeRenderId } from "./utils";
 
 const ABfyContext = createContext({ backendUrl: "" });
 
@@ -10,7 +10,7 @@ export const AbfyProvider = ({ children, backendUrl }: any) => {
       JSON.parse(sessionStorage.getItem("abfy_experiments")) || {};
 
     if (Object.keys(storedData).length === 0) {
-      const renderId = generateRenderId();
+      const renderId = randomIdGenerator("Render");
       storeRenderId(renderId);
     }
   }, []);
@@ -60,7 +60,7 @@ export async function publishExperimentResult(
   console.log("RenderId received is", renderId);
 
   if (!renderId) {
-    storeRenderId(generateRenderId());
+    storeRenderId(randomIdGenerator("Render"));
     renderId = getRenderId();
     console.log("RenderId after generation is", renderId);
     if (renderId) payload.renderId = renderId;

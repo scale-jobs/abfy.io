@@ -1,13 +1,58 @@
-export default function generateRenderId(): string {
-  const timestamp = Date.now().toString(36);
-  const randomString = Math.random().toString(36).slice(2, 11);
+export const randomIdGenerator = (prefix: string | null = null): string => {
+  const adjectives = [
+    "Bright",
+    "Creative",
+    "Dynamic",
+    "Energetic",
+    "Fantastic",
+    "Genuine",
+    "Happy",
+    "Innovative",
+    "Jolly",
+    "Keen",
+    "Lively",
+    "Marvelous",
+    "Optimistic",
+    "Productive",
+    "Reliable",
+    "Successful",
+    "Thriving",
+    "Vivacious",
+    "Wonderful",
+  ];
+  const nouns = [
+    "Adventure",
+    "Challenge",
+    "Concept",
+    "Design",
+    "Endeavor",
+    "Expedition",
+    "Goal",
+    "Horizon",
+    "Idea",
+    "Insight",
+    "Inspiration",
+    "Journey",
+    "Landmark",
+    "Mission",
+    "Objective",
+    "Perspective",
+    "Plan",
+    "Quest",
+    "Strategy",
+    "Vision",
+  ];
 
-  return `${timestamp}-${randomString}`;
-}
+  const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+  const noun = nouns[Math.floor(Math.random() * nouns.length)];
+  const number = Math.floor(Math.random() * 900) + 100;
 
-export function storeRenderId(renderId: string): void {
-  sessionStorage.setItem("abfy_experiments", JSON.stringify({ renderId }));
-}
+  if (prefix) {
+    return `${prefix}-${adj}${noun}${number}`;
+  } else {
+    return `${adj}${noun}${number}`;
+  }
+};
 
 export function getRenderId(): string | null {
   try {
@@ -19,4 +64,8 @@ export function getRenderId(): string | null {
     console.error("Error parsing session storage data:", error);
     return null;
   }
+}
+
+export function storeRenderId(renderId: string): void {
+  sessionStorage.setItem("abfy_experiments", JSON.stringify({ renderId }));
 }
