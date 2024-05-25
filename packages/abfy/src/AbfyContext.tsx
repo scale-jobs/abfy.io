@@ -1,9 +1,22 @@
 "use client";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import generateRenderId from "./utils";
 
 const ABfyContext = createContext({ backendUrl: "" });
 
 export const AbfyProvider = ({ children, backendUrl }: any) => {
+  useEffect(() => {
+    const storedData =
+      JSON.parse(sessionStorage.getItem("abfy_experiments")) || {};
+
+    if (Object.keys(storedData).length === 0) {
+      const renderId = generateRenderId();
+      storedData.renderId = renderId;
+
+      sessionStorage.setItem("abfy_experiments", JSON.stringify(storedData));
+    }
+  }, []);
+
   return (
     <ABfyContext.Provider value={{ backendUrl: backendUrl }}>
       {children}
