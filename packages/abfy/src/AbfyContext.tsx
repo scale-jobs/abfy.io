@@ -1,6 +1,6 @@
 "use client";
-import React, { createContext, useContext, useEffect, useState } from "react";
-import generateRenderId from "./utils";
+import { createContext, useContext, useEffect } from "react";
+import generateRenderId, { getRenderId, storeRenderId } from "./utils";
 
 const ABfyContext = createContext({ backendUrl: "" });
 
@@ -11,9 +11,7 @@ export const AbfyProvider = ({ children, backendUrl }: any) => {
 
     if (Object.keys(storedData).length === 0) {
       const renderId = generateRenderId();
-      storedData.renderId = renderId;
-
-      sessionStorage.setItem("abfy_experiments", JSON.stringify(storedData));
+      storeRenderId(renderId);
     }
   }, []);
 
@@ -42,6 +40,7 @@ type ExperiementResultPayload = {
   variantId: string;
   timestamp: string;
   context?: string;
+  renderId: string;
 };
 
 export async function publishExperimentResult(
@@ -54,7 +53,20 @@ export async function publishExperimentResult(
     experimentId,
     variantId,
     timestamp: new Date().toUTCString(),
+    renderId: "",
   };
+
+  let renderId = getRenderId();
+  console.log("RenderId received is", renderId);
+
+  if (!renderId) {
+    storeRenderId(generateRenderId());
+    renderId = getRenderId();
+    console.log("RenderId after generation is", renderId);
+    if (renderId) payload.renderId = renderId;
+  } else {
+    payload.renderId = renderId;
+  }
 
   if (context) {
     payload.context = context;
