@@ -69,5 +69,3 @@ Contributions are welcome! Please feel free to open issues or submit pull reques
 ABfy is open-source software licensed under the MIT License.
 
 ---
-
-
