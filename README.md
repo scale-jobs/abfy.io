@@ -1,81 +1,71 @@
-# Turborepo starter
+Absolutely! Here's a draft of a `README.md` file that describes your A/B testing library, ABfy:
 
-This is an official starter Turborepo.
+---
 
-## Using this example
+# ABfy: A Lightweight A/B Testing Library for React
 
-Run the following command:
+ABfy is a simple yet powerful A/B testing library designed to make experimentation easy within your React applications. It provides intuitive components and utilities to help you define, track, and analyze A/B tests to optimize your user experience and drive better results.
 
-```sh
-npx create-turbo@latest
+## Features
+
+* **Minimalistic API:**  Easily define experiments and variants using just two components: `<Experiment>` and `<Variant>`.
+* **Session-Based Consistency:**  Ensures users see the same variant throughout their session, even if they refresh the page.
+* **Automatic Experiment Detection:** The `<KeyAction>` component automatically associates user interactions with the correct experiment.
+* **Customizable Tracking:**  Integrate with your backend or data storage solution to collect experiment data for analysis.
+* **Lightweight:**  No external dependencies (except for `react`).  A simple, internal UUID-like generation is used for unique identifiers.
+
+## Installation
+
+```bash
+npm install abfy
+# or
+yarn add abfy
 ```
 
-## What's inside?
+## Usage
 
-This Turborepo includes the following packages/apps:
+```javascript
+import { ABfyProvider, Experiment, Variant, KeyAction } from "abfy";
 
-### Apps and Packages
+function MyComponent() {
+  return (
+    <ABfyProvider backendUrl="https://your-backend-endpoint">
+      <Experiment id="my-experiment">
+        <Variant id="control">
+          <button>Original Button</button>
+        </Variant>
+        <Variant id="variation">
+          <button>New Button</button>
+        </Variant>
+      </Experiment>
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
+      {/* Track user interactions within the experiment */}
+      <KeyAction onClick={() => /* ... */}>
+        Track this click!
+      </KeyAction>
+    </ABfyProvider>
+  );
+}
 ```
 
-### Develop
+## Components
 
-To develop all apps and packages, run the following command:
+* **`<ABfyProvider>`:**  Wraps your application and provides configuration (like the backend URL).
+* **`<Experiment>`:**  Defines an A/B test with a unique ID.
+* **`<Variant>`:**  Represents a different version (variant) of your test.
+* **`<KeyAction>`:**  Captures user interactions within an experiment for tracking.
 
-```
-cd my-turborepo
-pnpm dev
-```
+## Advanced Usage
 
-### Remote Caching
+* **Custom Probabilities:**  Assign custom probabilities to each variant to control traffic allocation.
+* **More Event Tracking:** Attach additional event handlers (e.g., `onSubmit`, `onChange`) to `<KeyAction>` to track different types of interactions.
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+## Contributing
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
+Contributions are welcome! Please feel free to open issues or submit pull requests.
 
-```
-cd my-turborepo
-npx turbo login
-```
+## License
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+ABfy is open-source software licensed under the MIT License.
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+---
