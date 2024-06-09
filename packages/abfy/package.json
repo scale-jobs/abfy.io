@@ -1,5 +1,5 @@
 {
-  "name": "@repo/abfy",
+  "name": "abfy",
   "version": "0.0.1",
   "exports": {
     "./Experiment": "./src/Experiment.tsx",
@@ -8,8 +8,6 @@
     "./KeyAction": "./src/KeyAction.tsx"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
     "@turbo/gen": "^1.12.4",
     "@types/node": "^20.11.24",
     "@types/eslint": "^8.56.5",
