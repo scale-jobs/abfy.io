@@ -1,6 +1,3 @@
-Absolutely! Here's a draft of a `README.md` file that describes your A/B testing library, ABfy:
-
----
 
 # ABfy: A Lightweight A/B Testing Library for React
 
