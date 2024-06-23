@@ -1,8 +1,7 @@
 "use client";
-import React, { useContext } from "react";
-import { publishExperimentResult, useAbfyContext } from "./AbfyContext";
+import React, { MouseEventHandler, FormEventHandler } from "react";
 
-import { MouseEventHandler, FormEventHandler } from "react";
+import { publishExperimentResult, useAbfyContext } from "./AbfyContext";
 
 interface KeyActionProps
   extends React.DetailedHTMLProps<
@@ -13,7 +12,7 @@ interface KeyActionProps
   onSubmit?: FormEventHandler<HTMLDivElement>;
 }
 
-export const KeyAction = ({ onClick, onSubmit, ...props }: KeyActionProps) => {
+export const KeyAction = ({ ...props }: KeyActionProps) => {
   const { backendUrl } = useAbfyContext();
 
   const handleInteraction = (eventType: string, eventData = {}) => {
