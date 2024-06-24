@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect } from "react";
 import useABfySession from "./ABfySessionProvider";
 import { randomIdGenerator, storeRenderId } from "./utils";
 import { ABFY_SESSION_STORAGE_KEY } from "./utils/constants";
+import { logger } from "./utils/logger";
 
 type AbfyProviderProps = {
   children: any;
@@ -80,8 +81,15 @@ export async function publishExperimentResult(
       );
     }
 
-    console.log("Experiment result published successfully.");
+    logger({
+      message: "Experiment result published successfully.",
+      level: "INFO",
+    });
   } catch (error) {
-    console.error("Error publishing experiment result:", error);
+    logger({
+      message: "Error publishing experiment result",
+      level: "ERROR",
+      data: error,
+    });
   }
 }

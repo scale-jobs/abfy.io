@@ -1,4 +1,5 @@
 import { ABFY_SESSION_STORAGE_KEY } from "./constants";
+import { logger } from "./logger";
 
 export const randomIdGenerator = (prefix?: string | null): string => {
   const adjectives = [
@@ -63,7 +64,11 @@ export function getRenderId(): string | null {
     const storedData = JSON.parse(localStorage) || {};
     return storedData.renderId || null;
   } catch (error) {
-    console.error("Error parsing session storage data:", error);
+    logger({
+      message: "Error parsing session storage data:",
+      level: "ERROR",
+      data: error,
+    });
     return null;
   }
 }

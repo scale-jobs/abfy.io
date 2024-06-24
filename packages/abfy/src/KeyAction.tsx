@@ -2,6 +2,7 @@
 import React, { MouseEventHandler, FormEventHandler } from "react";
 
 import { publishExperimentResult, useAbfyContext } from "./AbfyContext";
+import { logger } from "./utils/logger";
 
 interface KeyActionProps
   extends React.DetailedHTMLProps<
@@ -17,13 +18,16 @@ export const KeyAction = ({ ...props }: KeyActionProps) => {
 
   const handleInteraction = (eventType: string, eventData = {}) => {
     publishExperimentResult("", "", backendUrl, eventType);
-
-    console.log("Interaction:", {
-      experimentId: "null",
-      variantId: "null",
-      renderId: "null",
-      eventType,
-      eventData,
+    logger({
+      message: "Interaction:",
+      level: "INFO",
+      data: {
+        experimentId: "null",
+        variantId: "null",
+        renderId: "null",
+        eventType,
+        eventData,
+      },
     });
   };
 

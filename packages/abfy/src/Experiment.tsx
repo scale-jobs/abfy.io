@@ -3,6 +3,7 @@ import React, { ReactElement, useEffect, useState, ReactNode } from "react";
 
 import { publishExperimentResult, useAbfyContext } from "./AbfyContext";
 import { ABFY_VARIANT } from "./utils/constants";
+import { logger } from "./utils/logger";
 
 type ExperimentPropTypes = {
   children: ReactNode;
@@ -17,7 +18,11 @@ export function Experiment({
     useState<null | ReactElement<any>>(null);
   const context = useAbfyContext();
   useEffect(() => {
-    console.log("Context is", context);
+    logger({
+      message: "Context is",
+      level: "INFO",
+      data: context,
+    });
   }, [context]);
 
   useEffect(() => {
@@ -30,7 +35,11 @@ export function Experiment({
       const randomVariant = variants[randomIndex] as ReactElement<any>;
       if (randomVariant) {
         if (randomVariant.props.children) {
-          console.log("Variant Selected Is", randomVariant.props.children);
+          logger({
+            message: "Variant Selected Is",
+            data: randomVariant.props.children,
+            level: "INFO",
+          });
           setSelectedVariant(randomVariant);
           publishExperimentResult(
             id,
