@@ -21,6 +21,8 @@ yarn add abfy
 
 ## Usage
 
+To checkout the mental model behind ABfy [Read this](./docs/mentalModel.md)
+
 ```javascript
 import { ABfyProvider, Experiment, Variant, KeyAction } from "abfy";
 
