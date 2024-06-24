@@ -1,10 +1,5 @@
 import { Environments, LogLevels } from "./constants";
-
-type LoggerContext = {
-  message: string;
-  level: "INFO" | "ERROR" | "WARN";
-  data?: any;
-};
+import { LoggerContext } from "./types";
 
 export const logger = (context: LoggerContext) => {
   if (process.env.NODE_ENV === Environments.development) {
