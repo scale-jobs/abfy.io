@@ -1,9 +1,9 @@
-name: Publish Abfy Package 
+name: Publish Abfy Package
 
 on:
   push:
   pull_request:
-      types: [opened, reopened, synchronize]
+    types: [opened, reopened, synchronize]
   pull_request_target:
     branches: [main]
 
@@ -11,20 +11,23 @@ jobs:
   Setup:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code 
-        uses:  actions/checkout@v3
-      
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: "18"
           registry-url: https://registry.npmjs.org/
           scope: "@eyeamkd"
-      
+
       - name: Install Dependencies
         run: npm install
-      
-      - name: Publish 
+
+      - name: Run Tests
+        run: npm run test
+
+      - name: Publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         if: github.event_name == 'push'
@@ -41,7 +44,3 @@ jobs:
           cd packages/abfy
           npm version prerelease --preid alpha-${{ env.COMMIT_HASH }}
           npm publish --access public --tag alpha
-
-
-
-
