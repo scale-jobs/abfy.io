@@ -1,4 +1,4 @@
-import { AbfyProvider } from "@repo/abfy/AbfyContext";
+import { ABfyProvider } from "@repo/abfy/AbfyContext";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -17,9 +17,9 @@ export default function RootLayout({
 }): JSX.Element {
   return (
     <html lang="en">
-      <AbfyProvider backendUrl="https://webhook.site/89a562a1-b9ad-4b35-a909-c0811c3bf077">
+      <ABfyProvider backendUrl="https://webhook.site/89a562a1-b9ad-4b35-a909-c0811c3bf077">
         <body className={inter.className}>{children}</body>
-      </AbfyProvider>
+      </ABfyProvider>
     </html>
   );
 }

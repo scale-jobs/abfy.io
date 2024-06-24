@@ -1,8 +1,8 @@
-'use client';
-import React, { createContext, useContext, useEffect } from 'react';
+"use client";
+import React, { createContext, useContext, useEffect } from "react";
 
-import { getRenderId, randomIdGenerator, storeRenderId } from './utils';
-import { ABFY_SESSION_STORAGE_KEY } from './utils/constants';
+import { getRenderId, randomIdGenerator, storeRenderId } from "./utils";
+import { ABFY_SESSION_STORAGE_KEY } from "./utils/constants";
 
 type AbfyProviderProps = {
   children: any;
@@ -17,8 +17,8 @@ type ExperimentResultPayload = {
   renderId: string;
 };
 
-const ABfyContext = createContext({ backendUrl: '' });
-export const AbfyProvider = ({ children, backendUrl }: AbfyProviderProps) => {
+const ABfyContext = createContext({ backendUrl: "" });
+export const ABfyProvider = ({ children, backendUrl }: AbfyProviderProps) => {
   useEffect(() => {
     let storedData = {};
     let sessionData = sessionStorage.getItem(ABFY_SESSION_STORAGE_KEY);
@@ -27,7 +27,7 @@ export const AbfyProvider = ({ children, backendUrl }: AbfyProviderProps) => {
     }
 
     if (Object.keys(storedData).length === 0) {
-      const renderId = randomIdGenerator('Render');
+      const renderId = randomIdGenerator("Render");
       storeRenderId(renderId);
     }
   }, []);
@@ -42,7 +42,7 @@ export const AbfyProvider = ({ children, backendUrl }: AbfyProviderProps) => {
 export const useAbfyContext = () => {
   const context = useContext(ABfyContext);
   if (!context) {
-    throw new Error('useAbfyContext must be used within an AbfyProvider');
+    throw new Error("useAbfyContext must be used within an AbfyProvider");
   }
   return context;
 };
@@ -51,22 +51,22 @@ export async function publishExperimentResult(
   experimentId: string,
   variantId: string,
   backendUrl: string,
-  context: null | string = null,
+  context: null | string = null
 ): Promise<void> {
   const payload: ExperimentResultPayload = {
     experimentId,
     variantId,
     timestamp: new Date().toUTCString(),
-    renderId: '',
+    renderId: "",
   };
 
   let renderId = getRenderId();
-  console.log('RenderId received is', renderId);
+  console.log("RenderId received is", renderId);
 
   if (!renderId) {
-    storeRenderId(randomIdGenerator('Render'));
+    storeRenderId(randomIdGenerator("Render"));
     renderId = getRenderId();
-    console.log('RenderId after generation is', renderId);
+    console.log("RenderId after generation is", renderId);
     if (renderId) payload.renderId = renderId;
   } else {
     payload.renderId = renderId;
@@ -78,21 +78,21 @@ export async function publishExperimentResult(
 
   try {
     const response = await fetch(backendUrl, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
     });
 
     if (!response.ok) {
       throw new Error(
-        `Failed to publish experiment result: ${response.statusText}`,
+        `Failed to publish experiment result: ${response.statusText}`
       );
     }
 
-    console.log('Experiment result published successfully.');
+    console.log("Experiment result published successfully.");
   } catch (error) {
-    console.error('Error publishing experiment result:', error);
+    console.error("Error publishing experiment result:", error);
   }
 }
