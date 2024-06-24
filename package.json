@@ -7,7 +7,8 @@
     "lint": "turbo lint",
     "lint:fix": "turbo lint:fix",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "test": "turbo test"
+    "test": "turbo test",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
