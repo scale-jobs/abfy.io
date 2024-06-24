@@ -1,7 +1,8 @@
 "use client";
 import React, { createContext, useContext, useEffect } from "react";
 
-import { getRenderId, randomIdGenerator, storeRenderId } from "./utils";
+import useABfySession from "./ABfySessionProvider";
+import { randomIdGenerator, storeRenderId } from "./utils";
 import { ABFY_SESSION_STORAGE_KEY } from "./utils/constants";
 
 type AbfyProviderProps = {
@@ -57,20 +58,8 @@ export async function publishExperimentResult(
     experimentId,
     variantId,
     timestamp: new Date().toUTCString(),
-    renderId: "",
+    renderId: useABfySession(),
   };
-
-  let renderId = getRenderId();
-  console.log("RenderId received is", renderId);
-
-  if (!renderId) {
-    storeRenderId(randomIdGenerator("Render"));
-    renderId = getRenderId();
-    console.log("RenderId after generation is", renderId);
-    if (renderId) payload.renderId = renderId;
-  } else {
-    payload.renderId = renderId;
-  }
 
   if (context) {
     payload.context = context;

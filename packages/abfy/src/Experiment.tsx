@@ -1,7 +1,8 @@
-'use client';
-import React, { ReactElement, useEffect, useState, ReactNode } from 'react';
+"use client";
+import React, { ReactElement, useEffect, useState, ReactNode } from "react";
 
-import { publishExperimentResult, useAbfyContext } from './AbfyContext';
+import { publishExperimentResult, useAbfyContext } from "./AbfyContext";
+import { ABFY_VARIANT } from "./utils/constants";
 
 type ExperimentPropTypes = {
   children: ReactNode;
@@ -16,12 +17,12 @@ export function Experiment({
     useState<null | ReactElement<any>>(null);
   const context = useAbfyContext();
   useEffect(() => {
-    console.log('Context is', context);
+    console.log("Context is", context);
   }, [context]);
 
   useEffect(() => {
     const variants = React.Children.toArray(children).filter(
-      (child) => child?.props?.id === 'abfy_variant',
+      (child) => child?.props?.id === ABFY_VARIANT
     );
 
     if (variants && variants.length > 0) {
@@ -29,17 +30,16 @@ export function Experiment({
       const randomVariant = variants[randomIndex] as ReactElement<any>;
       if (randomVariant) {
         if (randomVariant.props.children) {
-          console.log('Variant Selected Is', randomVariant.props.children);
+          console.log("Variant Selected Is", randomVariant.props.children);
           setSelectedVariant(randomVariant);
           publishExperimentResult(
             id,
             randomVariant.props.id,
-            context.backendUrl,
+            context.backendUrl
           );
         }
       }
     }
-
     // selectVariant(variantId);
   }, [children]);
   return selectedVariant ? selectedVariant : <h1>Loading...</h1>;
