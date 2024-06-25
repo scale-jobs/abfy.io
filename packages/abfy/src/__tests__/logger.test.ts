@@ -6,12 +6,12 @@ describe("logger", () => {
   const originalEnv = process.env;
 
   beforeEach(() => {
-    jest.resetModules(); // Clears the cache
-    process.env = { ...originalEnv }; // Reset process.env to original state
+    jest.resetModules();
+    process.env = { ...originalEnv };
   });
 
   afterEach(() => {
-    process.env = originalEnv; // Restore original process.env
+    process.env = originalEnv;
   });
 
   it("should log info message in development mode", () => {
