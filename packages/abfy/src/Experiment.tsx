@@ -2,8 +2,8 @@
 import React, { ReactElement, useEffect, useState, ReactNode } from "react";
 
 import { publishExperimentResult, useAbfyContext } from "./AbfyContext";
-import { ABFY_VARIANT } from "./utils/constants";
 import { logger } from "./utils/logger";
+import { isReactElement, isVariant } from "./utils";
 
 type ExperimentPropTypes = {
   children: ReactNode;
@@ -26,9 +26,9 @@ export function Experiment({
   }, [context]);
 
   useEffect(() => {
-    const variants = React.Children.toArray(children).filter(
-      (child) => child?.props?.id === ABFY_VARIANT
-    );
+    const variants = React.Children.toArray(children)
+      .filter(isReactElement)
+      .filter(isVariant);
 
     if (variants && variants.length > 0) {
       const randomIndex: number = Math.floor(Math.random() * variants.length);
@@ -49,7 +49,6 @@ export function Experiment({
         }
       }
     }
-    // selectVariant(variantId);
   }, [children]);
   return selectedVariant ? selectedVariant : <h1>Loading...</h1>;
 }

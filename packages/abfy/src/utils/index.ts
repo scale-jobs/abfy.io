@@ -1,4 +1,5 @@
-import { ABFY_SESSION_STORAGE_KEY } from "./constants";
+import { ReactElement, ReactNode } from "react";
+import { ABFY_SESSION_STORAGE_KEY, ABFY_VARIANT } from "./constants";
 import { logger } from "./logger";
 
 export const randomIdGenerator = (prefix?: string | null): string => {
@@ -78,4 +79,12 @@ export function storeRenderId(renderId: string): void {
     ABFY_SESSION_STORAGE_KEY,
     JSON.stringify({ renderId })
   );
+}
+
+export function isReactElement(child: ReactNode): child is ReactElement {
+  return typeof child === "object" && child !== null && "props" in child;
+}
+
+export function isVariant(child: ReactElement) {
+  return child.props.id === ABFY_VARIANT;
 }
