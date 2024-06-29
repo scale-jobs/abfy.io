@@ -49,8 +49,9 @@ jobs:
           npm version prerelease --preid alpha-${{ github.sha }}
           npm publish --access public --tag alpha
 
-  Post-Coverage-Comment:
+  TestCoverage:
     needs: Setup
+    name: Test Coverage
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     steps:
