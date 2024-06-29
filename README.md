@@ -5,6 +5,8 @@ ABfy is a simple yet powerful A/B testing library designed to make experimentati
 
 To checkout the mental model behind ABfy [Read this](./docs/mentalModel.md)
 
+[Checkout the experiment data format and publishing](./docs/PostingData.md)
+
 
 ## Features
 

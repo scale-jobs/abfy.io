@@ -13,8 +13,11 @@ type ExperimentResultPayload = {
   experimentId: string;
   variantId: string;
   timestamp: string;
-  context?: string;
   renderId: string;
+  context?: any;
+  goalReached?: boolean;
+  timeOnVariant?: boolean;
+  error?: string;
 };
 
 const ABfyContext = createContext<{ backendUrl: string }>({ backendUrl: "" });
