@@ -30,17 +30,12 @@ jobs:
         with:
           name: coverage-report
           path: coverage
-          
+
       - name: Download Coverage Report
         uses: actions/download-artifact@v3
         with:
           name: coverage-report
           path: coverage
-
-      - name: Convert Coverage Report to JSON
-        run: |
-          npm install -g jest-junit
-          npx jest --coverageReporters=json-summary
 
       - name: Extract Coverage Summary
         id: coverage
