@@ -46,6 +46,7 @@ jobs:
       - name: Post Coverage Comment
         uses: actions/github-script@v6
         with:
+          github-token: ${{secrets.GTT}}
           script: |
             const fs = require('fs');
             const coverage = JSON.parse(fs.readFileSync('coverage-summary.json', 'utf8'));
