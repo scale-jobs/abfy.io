@@ -72,22 +72,46 @@ jobs:
           cat coverage/coverage-summary.json | jq '.total' > coverage-summary.json
           echo "::set-output name=summary::$(cat coverage-summary.json)"
 
-      - name: Post Coverage Comment
+      - name: Post or Update Coverage Comment
         uses: actions/github-script@v6
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
             const coverage = JSON.parse(fs.readFileSync('coverage-summary.json', 'utf8'));
-            const comment = `
+            const commentBody = `
               ## Test Coverage Report
               **Lines:** ${coverage.lines.pct}% (${coverage.lines.covered}/${coverage.lines.total})
               **Statements:** ${coverage.statements.pct}% (${coverage.statements.covered}/${coverage.statements.total})
               **Functions:** ${coverage.functions.pct}% (${coverage.functions.covered}/${coverage.functions.total})
               **Branches:** ${coverage.branches.pct}% (${coverage.branches.covered}/${coverage.branches.total})
             `;
-            github.rest.issues.createComment({
+
+            const { data: comments } = await github.rest.issues.listComments({
               issue_number: context.issue.number,
               owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: comment
+              repo: context.repo.repo
             });
+
+           
+            const existingComment = comments.find(comment =>
+              comment.user.login === 'github-actions[bot]' &&
+              comment.body.startsWith('## Test Coverage Report')
+            );
+
+          
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                comment_id: existingComment.id,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: commentBody
+              });
+            } else {
+              await github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: commentBody
+              });
+            }
