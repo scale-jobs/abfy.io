@@ -1,9 +1,10 @@
 "use client";
 import React, { ReactElement, useEffect, useState, ReactNode } from "react";
 
-import { publishExperimentResult, useAbfyContext } from "./AbfyContext";
+import { publishExperimentResult, useAbfyContext } from "./ABfyContext";
 import { logger } from "./utils/logger";
 import { isReactElement, isVariant } from "./utils";
+import useABfySession from "./ABfySessionProvider";
 
 type ExperimentPropTypes = {
   children: ReactNode;
@@ -17,6 +18,7 @@ export function Experiment({
   const [selectedVariant, setSelectedVariant] =
     useState<null | ReactElement<any>>(null);
   const context = useAbfyContext();
+  const renderId = useABfySession();
   useEffect(() => {
     logger({
       message: "Context is",
@@ -44,7 +46,8 @@ export function Experiment({
           publishExperimentResult(
             id,
             randomVariant.props.id,
-            context.backendUrl
+            context.backendUrl,
+            renderId
           );
         }
       }

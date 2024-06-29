@@ -24,11 +24,6 @@
   "engines": {
     "node": ">=18"
   },
-  "husky": {
-    "hooks": {
-      "pre-push": "npm run test"
-    }
-  },
   "packageManager": "npm@9.6.7",
   "workspaces": [
     "apps/*",

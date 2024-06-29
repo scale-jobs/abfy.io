@@ -1,6 +1,5 @@
 "use client";
 import React, { createContext, useContext, useEffect } from "react";
-
 import useABfySession from "./ABfySessionProvider";
 import { randomIdGenerator, storeRenderId } from "./utils";
 import { ABFY_SESSION_STORAGE_KEY } from "./utils/constants";
@@ -19,7 +18,8 @@ type ExperimentResultPayload = {
   renderId: string;
 };
 
-const ABfyContext = createContext({ backendUrl: "" });
+const ABfyContext = createContext<{ backendUrl: string }>({ backendUrl: "" });
+
 export const ABfyProvider = ({ children, backendUrl }: AbfyProviderProps) => {
   useEffect(() => {
     let storedData = {};
@@ -35,7 +35,7 @@ export const ABfyProvider = ({ children, backendUrl }: AbfyProviderProps) => {
   }, []);
 
   return (
-    <ABfyContext.Provider value={{ backendUrl: backendUrl }}>
+    <ABfyContext.Provider value={{ backendUrl }}>
       {children}
     </ABfyContext.Provider>
   );
@@ -43,7 +43,8 @@ export const ABfyProvider = ({ children, backendUrl }: AbfyProviderProps) => {
 
 export const useAbfyContext = () => {
   const context = useContext(ABfyContext);
-  if (!context) {
+  console.log("Context is", context);
+  if (!context || !context.backendUrl) {
     throw new Error("useAbfyContext must be used within an AbfyProvider");
   }
   return context;
@@ -53,13 +54,14 @@ export async function publishExperimentResult(
   experimentId: string,
   variantId: string,
   backendUrl: string,
+  renderId: string,
   context: null | string = null
 ): Promise<void> {
   const payload: ExperimentResultPayload = {
     experimentId,
     variantId,
     timestamp: new Date().toUTCString(),
-    renderId: useABfySession(),
+    renderId,
   };
 
   if (context) {

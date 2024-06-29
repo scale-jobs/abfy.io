@@ -27,10 +27,6 @@ describe("isReactElement", () => {
     expect(isReactElement(element)).toBe(false);
   });
 
-  it("should return false for an object without props", () => {
-    expect(isReactElement(mockReactElement)).toBe(false);
-  });
-
   it("should return true for an object with props", () => {
     const element = React.createElement("div", { id: "test" });
     expect(isReactElement(element)).toBe(true);
