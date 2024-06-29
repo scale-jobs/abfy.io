@@ -3,7 +3,7 @@ name: Publish Abfy Package
 on:
   push:
   pull_request:
-    types: [opened, reopened, synchronize]
+    types: [synchronize]
 
 jobs:
   Setup:
@@ -23,7 +23,7 @@ jobs:
         run: npm install
 
       - name: Run Tests with Coverage
-        run: npm run test -- --coverage
+        run: npm run test:cov
 
       - name: Upload Coverage Report
         if: always()
