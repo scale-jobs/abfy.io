@@ -1,0 +1,75 @@
+name: Publish Abfy Package
+
+on:
+  pull_request:
+    types: [synchronize]
+
+jobs:
+  TestCoverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          registry-url: https://registry.npmjs.org/
+          scope: "@eyeamkd"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Tests with Coverage
+        run: npm run test:cov
+
+      - name: Upload Coverage Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage
+
+  TestCoverage:
+    needs: Setup
+    name: Test Coverage
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Download Coverage Report
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage
+
+      - name: Convert Coverage Report to JSON
+        run: |
+          npm install -g jest-junit
+          npx jest --coverageReporters=json-summary
+
+      - name: Extract Coverage Summary
+        id: coverage
+        run: |
+          cat coverage/coverage-summary.json | jq '.total' > coverage-summary.json
+          echo "::set-output name=summary::$(cat coverage-summary.json)"
+
+      - name: Post Coverage Comment
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const coverage = JSON.parse(fs.readFileSync('coverage-summary.json', 'utf8'));
+            const comment = `
+              ## Test Coverage Report
+              **Lines:** ${coverage.lines.pct}% (${coverage.lines.covered}/${coverage.lines.total})
+              **Statements:** ${coverage.statements.pct}% (${coverage.statements.covered}/${coverage.statements.total})
+              **Functions:** ${coverage.functions.pct}% (${coverage.functions.covered}/${coverage.functions.total})
+              **Branches:** ${coverage.branches.pct}% (${coverage.branches.covered}/${coverage.branches.total})
+            `;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
