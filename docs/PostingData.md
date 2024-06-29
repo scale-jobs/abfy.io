@@ -1,6 +1,6 @@
-# Publishing Experiment Results 
+# Publishing Experiment Results
 
-## Data format for Publishing 
+## Data format for Publishing
 
 ## Experiment Result Payload
 
@@ -59,9 +59,10 @@ const App = () => {
 };
 
 export default App;
-``` 
+```
 
-3. **Data Posting Process**
+## Data Posting Process
+
 - When recordExperimentResult(result) is called within your application using ABfy hooks or methods:
 
 - Data Format: The result object conforms to the ExperimentResultPayload structure, containing experiment details like experimentId, variantId, timestamp, context, goalReached, etc.
@@ -70,9 +71,9 @@ export default App;
 
 - Error Handling: Ensure your backend endpoint handles errors gracefully and provides appropriate responses for data posting failures or validation issues.
 
-4. **Security Considerations**
+## Security Considerations
 
-- Secure Backend: Ensure your backend endpoint (https://your-backend-endpoint) is secure and supports HTTPS to protect data transmission.
+- Secure Backend: Ensure your backend endpoint (<https://your-backend-endpoint>) is secure and supports HTTPS to protect data transmission.
 
 - Authentication: Consider implementing authentication mechanisms or using tokens to secure access to the backend endpoint, especially if it involves sensitive user data.
   
