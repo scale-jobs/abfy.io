@@ -1,6 +1,5 @@
 "use client";
 import React, { createContext, useContext, useEffect } from "react";
-import useABfySession from "./ABfySessionProvider";
 import { randomIdGenerator, storeRenderId } from "./utils";
 import { ABFY_SESSION_STORAGE_KEY } from "./utils/constants";
 import { logger } from "./utils/logger";

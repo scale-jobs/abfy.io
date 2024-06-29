@@ -1,7 +1,6 @@
 name: Publish Abfy Package
 
 on:
-  push:
   pull_request:
     types: [synchronize]
 
