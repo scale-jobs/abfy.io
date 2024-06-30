@@ -13,8 +13,10 @@
   "exports": {
     "./Experiment": "./src/Experiment.tsx",
     "./Variant": "./src/Variant.tsx",
-    "./AbfyContext": "./src/AbfyContext.tsx",
-    "./KeyAction": "./src/KeyAction.tsx"
+    "./ABfyContext": "./src/tempcontext.tsx",
+    "./KeyAction": "./src/KeyAction.tsx",
+    "./ABfyProvider": "./src/ABfySessionProvider.tsx",
+    ".": "./src/index.ts"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.6",

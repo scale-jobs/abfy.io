@@ -1,7 +1,7 @@
 import React from "react";
-import { Experiment } from "@repo/abfy/Experiment";
-import { Variant } from "@repo/abfy/Variant";
-import { KeyAction } from "@repo/abfy/KeyAction";
+import { Experiment } from "@repo/abfy";
+import { Variant } from "@repo/abfy";
+import { KeyAction } from "@repo/abfy";
 import RandomComponent from "./RandomComponent";
 
 function test() {

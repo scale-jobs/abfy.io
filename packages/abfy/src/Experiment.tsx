@@ -11,7 +11,7 @@ type ExperimentPropTypes = {
   id: string;
 };
 
-export function Experiment({
+export default function Experiment({
   id,
   children,
 }: ExperimentPropTypes): ReactElement {
