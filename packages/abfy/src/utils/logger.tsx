@@ -12,7 +12,6 @@ export const logger = (context: LoggerContext) => {
         return console.warn(context.message, context.data);
       default:
         throw Error("Improper Log Input");
-        break;
     }
   } else {
     if (context.level === LogLevels.ERROR) {

@@ -60,9 +60,9 @@ export const randomIdGenerator = (prefix?: string | null): string => {
 
 export function getRenderId(): string | null {
   try {
-    const localStorage = sessionStorage.getItem(ABFY_SESSION_STORAGE_KEY);
-    if (!localStorage) return null;
-    const storedData = JSON.parse(localStorage) || {};
+    const sessionData = sessionStorage.getItem(ABFY_SESSION_STORAGE_KEY);
+    if (!sessionData) return null;
+    const storedData = JSON.parse(sessionData) || {};
     return storedData.renderId || null;
   } catch (error) {
     logger({
