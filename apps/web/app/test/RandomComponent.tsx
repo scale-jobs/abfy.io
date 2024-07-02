@@ -1,3 +1,4 @@
+"use client";
 import { KeyAction } from "@repo/abfy/KeyAction";
 import React from "react";
 

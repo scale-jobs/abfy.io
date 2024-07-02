@@ -1,7 +1,7 @@
+"use client";
 import React from "react";
 import { Experiment } from "@repo/abfy";
 import { Variant } from "@repo/abfy";
-import { KeyAction } from "@repo/abfy";
 import RandomComponent from "./RandomComponent";
 
 function test() {

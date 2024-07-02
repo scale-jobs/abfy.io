@@ -4,7 +4,7 @@ import {
   ABfyProvider,
   useAbfyContext,
   publishExperimentResult,
-} from "../tempcontext";
+} from "../abfyContext";
 import { ABFY_SESSION_STORAGE_KEY } from "../utils/constants";
 import { logger } from "../utils/logger";
 

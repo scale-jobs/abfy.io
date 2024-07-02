@@ -1,3 +1,4 @@
+"use client";
 import { ABfyProvider } from "@repo/abfy";
 import "./globals.css";
 import { Inter } from "next/font/google";

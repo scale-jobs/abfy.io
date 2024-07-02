@@ -17,7 +17,9 @@ function useABfySession() {
     }
   }, []);
 
-  return sessionId;
+  return sessionId === ""
+    ? localStorage.getItem(ABFY_SESSION_STORAGE_KEY)
+    : sessionId;
 }
 
 export default useABfySession;

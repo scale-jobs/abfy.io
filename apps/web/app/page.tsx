@@ -1,4 +1,4 @@
-import Image from "next/image";
+"use client";
 import { Experiment, Variant } from "@repo/abfy";
 import styles from "./page.module.css";
 

@@ -47,7 +47,7 @@ export const useAbfyContext = () => {
   const context = useContext(ABfyContext);
   console.log("Context is", context);
   if (!context || !context.backendUrl) {
-    throw new Error("useAbfyContext must be used within an AbfyProvider");
+    throw new Error("Invalid Backend URL");
   }
   return context;
 };

@@ -1,7 +1,7 @@
 "use client";
 import React, { ReactElement, useEffect, useState, ReactNode } from "react";
 
-import { publishExperimentResult, useAbfyContext } from "./tempcontext";
+import { publishExperimentResult, useAbfyContext } from "./abfyContext";
 import { logger } from "./utils/logger";
 import { isReactElement, isVariant } from "./utils";
 import useABfySession from "./ABfySessionProvider";
@@ -35,7 +35,7 @@ export default function Experiment({
     if (variants && variants.length > 0) {
       const randomIndex: number = Math.floor(Math.random() * variants.length);
       const randomVariant = variants[randomIndex] as ReactElement<any>;
-      if (randomVariant) {
+      if (randomVariant && renderId) {
         if (randomVariant.props.children) {
           logger({
             message: "Variant Selected Is",
