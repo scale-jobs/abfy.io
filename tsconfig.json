@@ -1,3 +1,19 @@
 {
-  "extends": "@repo/typescript-config/base.json"
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "Node16",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true, // Enable this
+    "allowSyntheticDefaultImports": true, // Enable this
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node16",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  }
 }

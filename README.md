@@ -3,6 +3,11 @@
 
 ABfy is a simple yet powerful A/B testing library designed to make experimentation easy within your React applications. It provides intuitive components and utilities to help you define, track, and analyze A/B tests to optimize your user experience and drive better results.
 
+To checkout the mental model behind ABfy [Read this](./docs/mentalModel.md)
+
+[Checkout the experiment data format and publishing](./docs/PostingData.md)
+
+
 ## Features
 
 * **Minimalistic API:**  Easily define experiments and variants using just two components: `<Experiment>` and `<Variant>`.
@@ -20,7 +25,6 @@ yarn add abfy
 ```
 
 ## Usage
-
 ```javascript
 import { ABfyProvider, Experiment, Variant, KeyAction } from "abfy";
 

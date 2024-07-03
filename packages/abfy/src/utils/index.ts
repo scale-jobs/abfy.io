@@ -1,4 +1,8 @@
-export const randomIdGenerator = (prefix: string | null = null): string => {
+import { ReactElement, ReactNode } from "react";
+import { ABFY_SESSION_STORAGE_KEY, ABFY_VARIANT } from "./constants";
+import { logger } from "./logger";
+
+export const randomIdGenerator = (prefix?: string | null): string => {
   const adjectives = [
     "Bright",
     "Creative",
@@ -56,16 +60,31 @@ export const randomIdGenerator = (prefix: string | null = null): string => {
 
 export function getRenderId(): string | null {
   try {
-    const localStorage = sessionStorage.getItem("abfy_experiments");
-    if (!localStorage) return null;
-    const storedData = JSON.parse(localStorage) || {};
+    const sessionData = sessionStorage.getItem(ABFY_SESSION_STORAGE_KEY);
+    if (!sessionData) return null;
+    const storedData = JSON.parse(sessionData) || {};
     return storedData.renderId || null;
   } catch (error) {
-    console.error("Error parsing session storage data:", error);
+    logger({
+      message: "Error parsing session storage data:",
+      level: "ERROR",
+      data: error,
+    });
     return null;
   }
 }
 
 export function storeRenderId(renderId: string): void {
-  sessionStorage.setItem("abfy_experiments", JSON.stringify({ renderId }));
+  sessionStorage.setItem(
+    ABFY_SESSION_STORAGE_KEY,
+    JSON.stringify({ renderId })
+  );
+}
+
+export function isReactElement(child: ReactNode): child is ReactElement {
+  return typeof child === "object" && child !== null && "props" in child;
+}
+
+export function isVariant(child: ReactElement) {
+  return !!child.props.variantId;
 }
