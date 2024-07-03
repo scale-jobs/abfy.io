@@ -9,19 +9,19 @@ function test() {
     <>
       <h1>Testing</h1>
       <Experiment id="Experiment1">
-        <Variant>
+        <Variant variantId="123">
           <h1>Variant 1</h1>
         </Variant>
-        <Variant>
+        <Variant variantId="124">
           <h1>Variant 2</h1>
         </Variant>
-        <Variant>
+        <Variant variantId="125">
           <h1>Variant 3</h1>
         </Variant>
-        <Variant>
+        <Variant variantId="126">
           <h1>Variant 4</h1>
         </Variant>
-        <Variant>
+        <Variant variantId="127">
           <h1>Variant 5</h1>
         </Variant>
       </Experiment>

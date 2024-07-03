@@ -1,25 +1,53 @@
 import React, { useEffect, useState } from "react";
 import { randomIdGenerator } from "./utils";
-import { ABFY_SESSION_STORAGE_KEY } from "./utils/constants";
+import {
+  ABFY_SESSION_CONTEXT,
+  ABFY_SESSION_STORAGE_KEY,
+} from "./utils/constants";
+import { ABfySessionContext, UseABfySessionProps } from "./utils/types";
 // Store a unique but human readable session id for each render
 // Return the session id if present or create a new one if not
 // All the operations WRT a user session will take place here
-function useABfySession() {
-  const [sessionId, setSessionId] = useState<string>("");
-  useEffect(() => {
-    const existingSessionId = localStorage.getItem(ABFY_SESSION_STORAGE_KEY);
-    if (existingSessionId) {
-      setSessionId(existingSessionId);
-    } else {
-      const sessionId: string = randomIdGenerator();
-      localStorage.setItem(ABFY_SESSION_STORAGE_KEY, sessionId);
-      setSessionId(sessionId);
+export function updateAbfySession(
+  abfySessionContext: ABfySessionContext,
+  experimentId: string,
+  variantId: string
+): ABfySessionContext {
+  let generatedSessionContext: ABfySessionContext = {
+    sessionId: "",
+    experimentVariantMapping: {},
+  };
+  const existingSession = localStorage.getItem(ABFY_SESSION_CONTEXT);
+  if (existingSession) {
+    generatedSessionContext = JSON.parse(existingSession);
+    console.log("existing context", existingSession);
+    if (!generatedSessionContext.experimentVariantMapping[experimentId]) {
+      generatedSessionContext.experimentVariantMapping[experimentId] = {
+        variantId: variantId,
+        context: {},
+      };
     }
-  }, []);
+  } else {
+    const generatedSessionId: string = randomIdGenerator();
+    localStorage.setItem(ABFY_SESSION_STORAGE_KEY, generatedSessionId);
 
-  return sessionId === ""
-    ? localStorage.getItem(ABFY_SESSION_STORAGE_KEY)
-    : sessionId;
+    generatedSessionContext.sessionId = generatedSessionId;
+    generatedSessionContext.experimentVariantMapping[experimentId] = {
+      variantId: variantId,
+      context: {},
+    };
+    localStorage.setItem(
+      ABFY_SESSION_CONTEXT,
+      JSON.stringify(generatedSessionContext)
+    );
+  }
+  return generatedSessionContext;
 }
 
-export default useABfySession;
+export function useABfySession(): UseABfySessionProps {
+  const [abfySession, setABfySession] = useState<ABfySessionContext>({
+    sessionId: "",
+    experimentVariantMapping: {},
+  });
+  return { abfySession, setABfySession };
+}

@@ -86,5 +86,5 @@ export function isReactElement(child: ReactNode): child is ReactElement {
 }
 
 export function isVariant(child: ReactElement) {
-  return child.props.id === ABFY_VARIANT;
+  return !!child.props.variantId;
 }

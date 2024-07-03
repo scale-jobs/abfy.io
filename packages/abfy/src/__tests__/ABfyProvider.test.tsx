@@ -7,6 +7,7 @@ import {
 } from "../abfyContext";
 import { ABFY_SESSION_STORAGE_KEY } from "../utils/constants";
 import { logger } from "../utils/logger";
+import { ExperimentResultPayload, ExperimentResultProps } from "../utils/types";
 
 jest.mock("../utils/logger");
 jest.mock("../ABfySessionProvider", () => jest.fn());
@@ -78,6 +79,13 @@ describe("useAbfyContext", () => {
 });
 
 describe("publishExperimentResult", () => {
+  const mockExperimentResultProps: ExperimentResultProps = {
+    experimentId: "exp1",
+    variantId: "var1",
+    renderId: "MockRenderId",
+    context: {},
+    backendUrl: "someUrl",
+  };
   beforeEach(() => {
     jest.clearAllMocks();
     mockUseABfySession.mockReturnValue("MockRenderId");
@@ -91,13 +99,7 @@ describe("publishExperimentResult", () => {
       } as Response)
     );
 
-    await publishExperimentResult(
-      "exp1",
-      "var1",
-      "http://example.com",
-      "MockRenderId",
-      "testContext"
-    );
+    await publishExperimentResult(mockExperimentResultProps);
 
     // expect(global.fetch).toHaveBeenCalledWith("http://example.com", {
     //   method: "POST",
@@ -126,12 +128,7 @@ describe("publishExperimentResult", () => {
       } as Response)
     );
 
-    await publishExperimentResult(
-      "exp1",
-      "var1",
-      "http://example.com",
-      "testRenderId"
-    );
+    await publishExperimentResult(mockExperimentResultProps);
 
     // expect(global.fetch).toHaveBeenCalledWith("http://example.com", {
     //   method: "POST",

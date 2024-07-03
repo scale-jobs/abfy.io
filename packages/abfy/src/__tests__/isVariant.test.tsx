@@ -22,8 +22,8 @@ describe("isVariant function", () => {
     expect(result).toBe(false);
   });
 
-  it("should return true if the child has id prop set to different value", () => {
-    const child = React.createElement("div", { id: ABFY_VARIANT });
+  it("should return true if the child has variantId prop set to different value", () => {
+    const child = React.createElement("div", { variantId: ABFY_VARIANT });
 
     const result = isVariant(child);
     expect(result).toBe(true);

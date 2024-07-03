@@ -1,24 +1,17 @@
 "use client";
 import React, { createContext, useContext, useEffect } from "react";
 import { randomIdGenerator, storeRenderId } from "./utils";
-import { ABFY_SESSION_STORAGE_KEY } from "./utils/constants";
+import {
+  ABFY_SESSION_CONTEXT,
+  ABFY_SESSION_STORAGE_KEY,
+} from "./utils/constants";
 import { logger } from "./utils/logger";
-
-type AbfyProviderProps = {
-  children: any;
-  backendUrl: string;
-};
-
-type ExperimentResultPayload = {
-  experimentId: string;
-  variantId: string;
-  timestamp: string;
-  renderId: string;
-  context?: any;
-  goalReached?: boolean;
-  timeOnVariant?: boolean;
-  error?: string;
-};
+import {
+  ABfySessionContext,
+  AbfyProviderProps,
+  ExperimentResultPayload,
+  ExperimentResultProps,
+} from "./utils/types";
 
 const ABfyContext = createContext<{ backendUrl: string }>({ backendUrl: "" });
 
@@ -53,12 +46,9 @@ export const useAbfyContext = () => {
 };
 
 export async function publishExperimentResult(
-  experimentId: string,
-  variantId: string,
-  backendUrl: string,
-  renderId: string,
-  context: null | string = null
+  props: ExperimentResultProps
 ): Promise<void> {
+  const { experimentId, variantId, renderId, context, backendUrl } = props;
   const payload: ExperimentResultPayload = {
     experimentId,
     variantId,
@@ -92,6 +82,44 @@ export async function publishExperimentResult(
   } catch (error) {
     logger({
       message: "Error publishing experiment result",
+      level: "ERROR",
+      data: error,
+    });
+  }
+}
+
+export async function publishKeyAction(
+  keyActionId: string,
+  backendUrl: string
+): Promise<void> {
+  const sessionInfo = localStorage.getItem(ABFY_SESSION_CONTEXT);
+  try {
+    if (sessionInfo) {
+      const sessionDetail = JSON.parse(sessionInfo) as ABfySessionContext;
+      const payload = {
+        sessionDetail: sessionDetail,
+        keyActionId,
+      };
+      const response = await fetch(backendUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to publish Key Action: ${response.statusText}`);
+      }
+
+      logger({
+        message: "Key Action published successfully.",
+        level: "INFO",
+      });
+    }
+  } catch (error) {
+    logger({
+      message: "Error publishing Key Action",
       level: "ERROR",
       data: error,
     });
