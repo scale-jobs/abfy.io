@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <div>
       <h1>Home Page</h1>
-      {data && <p>{data.message}</p>}
+      {data && <p>{data}</p>}
     </div>
   );
 }
