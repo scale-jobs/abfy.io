@@ -1,5 +1,5 @@
 // Personal/openSource/abfy.io/apps/dashboard/app/page.tsx
-"use client";
+'use client';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
