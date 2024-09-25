@@ -26,7 +26,10 @@ This experiment of yours has two variants in it.
 
 The KeyAction for this experiment is clicking the button ```Surprise Me``` 
 
-As a user of this library, you should be able to know which variant made the users click the button more, there by ending the debate to what should be the title of the section.
+As a user of this library, you should be able to know which variant made the users click the button more, there by ending the debate to what should be the title of the section. 
+
+
+<img width="1190" alt="ABfy Library Mental Model" src="https://github.com/user-attachments/assets/92b48083-70d7-46f6-b353-11dff758d301">
 
 
 ## The Implementation
